@@ -28,9 +28,12 @@ class ReviewController extends Controller
     public function update(ReviewRequest $request, $id)
     {
         $review = Review::findOrFail($id);
+        if ($review->user_id != Auth::id()) {
+            return redirect()->back();
+        }
         $data = [
-            'content' => $request->update_review,
-            'rating' => $request->update_rating
+            'content' => $request->content,
+            'rating' => $request->rating
         ];
         $review->update($data);
         return redirect()->back();

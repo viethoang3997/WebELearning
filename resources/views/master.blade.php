@@ -14,9 +14,9 @@
     @include('layouts.header')
     
     @yield('main')
-
-    @include('layouts.footer')
     
+    @include('layouts.footer')
+    {{-- <script src="{{ asset('js/snow.js') }}" type="text/javascript"></script> --}}
     <script src="{{ asset('js/jquery.min.js')  }}" type="text/javascript"></script> 
     <script src="{{ asset('js/main.js') }}" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> 

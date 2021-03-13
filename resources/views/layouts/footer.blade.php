@@ -35,12 +35,12 @@
             </ul>
         </div>
         <div class="social d-flex align-items-center justify-content-center col-xl-4 col-md-4 col-5">
-            <img class="social-link" src="{{ asset('storage/image/Group%203.png') }}" data-toggle="tooltip" data-placement="top" title="facebook.com/tuyen.dung.haposoft">
+            <img class="social-link" src="{{ asset('storage/image/Group%203.png') }}" data-toggle="tooltip" data-placement="top" title="facebook.com/khoa.hoc">
             <img class="social-link" src="{{ asset('storage/image/Group%205.png') }}" data-toggle="tooltip" data-placement="top" title="+84-85-645-9898">
             <img class="social-link" src="{{ asset('storage/image/Group%204.png') }}" data-toggle="tooltip" data-placement="top" title="info@haposoft.com">
         </div>
     </div>
     <div class="copy-right justify-content-center align-items-center row">
-        <p>&copy; 2020 HapoLearn, Inc. All rights reserved.</p>
+        <p>&copy; 2020 E-Learning, Inc. All rights reserved.</p>
     </div>
 </footer>

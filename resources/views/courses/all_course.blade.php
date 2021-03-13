@@ -5,15 +5,15 @@
     <div class="main-body mt-5 container">
         <div class="filter-find row my-3">
             <div class="d-flex align-items-center mt-3">
-                <form action="{{ Route('course.search') }}" method="GET">
-                    <button class="btn filter-btn mr-2"><i class="fas fa-sliders-h mr-1"></i>Filter</button>
-                    <input type="text" placeholder="Search..." class="find-input w-80" name="search" value="{{ request('search') }}">
+                <button class="btn filter-btn mr-2 py-2" id="filterBtn"><i class="fas fa-sliders-h mr-1"></i>Filter</button>
+                <form action="{{ route('course.search') }}" method="GET">
+                    <input type="text" placeholder="Search..." class="find-input p-2" name="search" value="{{ request('search') }}">
                     <i class="fas fa-search search-icon"></i>
-                    <input type ="submit" value="Tìm kiếm" class="btn-search">
+                    <input type="submit" class="btn-search" value="Tìm kiếm">
                 </form>
             </div>
         </div>
-        {{-- <div class="course-filter row mt-3" id="filterTable">
+        <div class="course-filter row mt-3 mb-3" id="filterTable">
             <div class="d-flex">
                 <div class="col-1 filter-title p-3">Filter</div>
                 <div class="col-10 d-flex flex-wrap">
@@ -29,18 +29,18 @@
                     <div class="filter-select">
                         <select name="teacher" class="custom-select">
                             <option selected value="0">Teacher</option>
-                            @foreach ($teachers as $user)
+                            {{-- @foreach ($teachers as $user)
                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
-                            @endforeach
+                            @endforeach --}}
                         </select>
                         <input type="text" id="teacherId" value="{{ request('teacher') }}" hidden>
                     </div>
                     <div class="filter-select">
                         <select name="tags" class="custom-select">
                             <option value="0">Tag</option>
-                            @foreach ($tags as $tag)
-                                <option value="{{ $tag->id }}">{{ $tag->tag_title }}</option>
-                            @endforeach
+                            {{-- @foreach ($tags as $tag)
+                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                            @endforeach --}}
                         </select>
                     </div>
                     <div class="filter-select">
@@ -73,7 +73,7 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
         <div class="all-course row">
             @if (count($courses) > 0)
                 @foreach ($courses as $course)

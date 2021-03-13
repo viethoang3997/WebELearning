@@ -1,14 +1,14 @@
 @extends('admin.admin_lte')
-@section('title','listcourse')
+@section('title','listtag')
 @section('contents')
 
 @if(Session::has('message'))
         <div class="alert alert-success">{{ Session::get('message') }}</div>
 @endif         
-    <center><h2>Danh sách khoá học</h2></center>
+    <center><h2>Danh sách các tag</h2></center>
     <div class="filter-find">
         <div class="d-flex align-items-center">
-            <form action="{{ Route('admin.course.search') }}" method="GET">
+            <form action="{{ Route('admin.tag.search') }}" method="GET">
                 <div class="input-group">
                     <input type="text" placeholder="Search..." class="find-input mb-3" name="search" value="{{ request('search') }}">
                     <i class="fas fa-search search-icon"></i>
@@ -21,36 +21,26 @@
         <tr>
             <th>STT</th>
             <th>Name </th>
-            <th>Image</th>
-            <th>Description</th>
-            <th>Price</th>
             <th>Edit</th>
             <th>Delete</th>
-            <th>show</th>
         </tr>
     </thead>
     <tbody>
-    <?php $stt=0; foreach ($courses as $course): $stt++ ?>
+    <?php $stt=0; foreach ($tags as $tag): $stt++ ?>
     <tr>
         <td>{{ $stt }}</td>
-        <td>{{ $course['name'] }}</td>
-        <td><img src="{{ asset('./storage/image/'.$course['image']) }}" width="100px"></td>
-        <td>{{ $course['description'] }}</td>
-        <td>{{ $course['price'] }}</td>
-        <td><a href="{{ Route('admin.courses.edit', $course['id']) }}" class="btn btn-primary">Sửa</a></td>
+        <td>{{ $tag['name'] }}</td>
+        <td><a href="{{ Route('admin.tags.edit', $tag['id']) }}" class="btn btn-primary">Sửa</a></td>
         <td>
-            <form action="{{ Route('admin.courses.destroy', $course['id']) }}" method="post">
+            <form action="{{ Route('admin.tags.destroy', $tag['id']) }}" method="post">
                 @method('DELETE')
                 @csrf
                 <button class="btn btn-danger" onclick="return confirm('Are you sure ?')">Xóa</button>
             </form>
-        </td>
-        <td>
-            <a href="{{ Route('admin.lessons.index')."?courseId=".$course->id }} "  class="btn btn-info">info</a>
         </td>     
     </tr>
     <?php endforeach ?>
     </tbody>
     </table> 
-    {{ $courses->appends($_GET)->links() }}
+    {{ $tags->appends($_GET)->links() }}
 @endsection

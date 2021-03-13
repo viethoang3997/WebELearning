@@ -68,7 +68,7 @@
 //end banner first
 
 .footer {
-  margin-top: -80px;
+  margin-top: 30px;
 }
 
 .main-footer {
@@ -1167,39 +1167,37 @@
   width: 245px;
 }
 
-// .course-filter {
-//   display: none;
-//   background-color: white;
-//   border: 1px solid #c4c4c4;
-//   border-radius: 5px;
+.course-filter {
+  display: none;
+  background-color: white;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
 
-//   .filter-title {
-//     color: $lesson-tittle-color;
-//     @include fontUtm(bold, 16px, 22px);
-//   }
+  .filter-title {
+    @include font(bold, 16px, "UTM BryantLG", 22px, #505353);
+  }
 
-//   .order-by-time {
-//     width: 101px;
-//     height: 34px;
-//   }
-// }
+  .order-by-time {
+    width: 101px;
+    height: 34px;
+  }
+}
 
-// .course-filter input[type="radio"] + label {
-//   background-color: #e5e6e7;
-//   color: $lesson-tittle-color;
-//   margin: 10px 5px;
-//   cursor: pointer;
-//   border-radius: 2px;
-//   @include fontUtm(bold, 14px, 19px);
-// }
+.course-filter input[type="radio"] + label {
+  background-color: #e5e6e7;
+  margin: 10px 5px;
+  cursor: pointer;
+  border-radius: 2px;
+  @include font(bold, 14px, "UTM BryantLG", 19px, #505353);
+}
 
-// .course-filter input[type="radio"]:checked + label,
-// .Checked + label {
-//   color: white;
-//   background: $color-green;
-// }
+.course-filter input[type="radio"]:checked + label,
+.Checked + label {
+  color: white;
+  background: #b2d235;
+}
 
-// .filter-select {
-//   width: 140px;
-//   margin: 10px;
-// }
+.filter-select {
+  width: 140px;
+  margin: 10px;
+}

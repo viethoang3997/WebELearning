@@ -60,7 +60,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
+        <a href="{{ Route('admin.index') }}" class="brand-link">
             <span class="brand-text font-weight-light">Admin HapoLearn</span>
         </a>
 
@@ -69,7 +69,7 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="info">
-                    <a href="#" class="d-block">HapoSoft</a>
+                    <a href="{{ Route('index') }}" class="d-block">HapoSoft</a>
                 </div>
             </div>
 
@@ -124,6 +124,29 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item has-treeview menu-open">
+                        <a href="#" class="nav-link active">
+                            <i class="nav-icon fa fa-tachometer-alt"></i>
+                            <p>
+                                Quản lý Tags
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ Route('admin.tags.index') }}" class="nav-link active">
+                                    <i class="fa fa-circle nav-icon"></i>
+                                    <p>Danh sách các Tag</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ Route('admin.tags.create') }}" class="nav-link">
+                                    <i class="fa fa-circle nav-icon"></i>
+                                    <p>Thêm tag</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -139,7 +162,7 @@
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-        <strong>Copyright &copy; 2020 <a href="#">AdminLTE.HapoSoft</a>.</strong>
+        <strong>Copyright &copy; 2021. <a href="#">VietHoang</a>.</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
             <b>Version</b> 3.0.4

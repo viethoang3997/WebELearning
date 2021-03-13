@@ -4,16 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Course;
-use App\Models\CourseUser;
 use App\User;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
     public function index()
     {
-        $courses = Course::paginate(config('variable.paginate'));
-        return view('courses.all_course', compact('courses'));
+        $teachers = User::where('role_id', '2')->get();
+        $tags = Tag::all();
+        $courses = Course::orderBy('id', 'asc')->paginate(config('variable.paginate'));
+        return view('courses.all_course', compact(['courses', 'teachers', 'tags']));
     }
 
     public function show($id)
@@ -32,6 +34,31 @@ class CourseController extends Controller
                                 ->orWhere('description', 'like', '%'  . $search. '%')
                                 ->paginate(2);
         return view('courses.all_course', compact('courses', 'search'));
+    }
+
+    // public function getSearch(Request $request)
+    // {
+    //     $teachers = User::where('role_id', '2')->get();
+    //     $tags = Tag::all();
+    //     $courses = Course::query()
+    //         ->OrderByTimes($request->time)
+    //         ->NameCourse($request->name)
+    //         ->OrderByStudents($request->student)
+    //         ->OrderByLessosn($request->lesson)
+    //         ->OrderByReviews($request->review)
+    //         ->OrderCourse($request->order_by_time)
+    //         ->TeacherFind($request->teacher)
+    //         ->FindByTag($request->tag)
+    //         ->paginate(2);
+    //     return view('courses.all_courses', compact('courses', 'teachers', 'tags'));
+    // }
+
+    public function searchByTag($id)
+    {
+        $teachers = User::where('role_id', '2')->get();
+        $tags = Tag::all();
+        $courses = Course::query()->FindByTag($id)->paginate(config('variable.paginate'));
+        return view('courses.all_courses', compact('courses', 'teachers', 'tags'));
     }
 
     public function joinCourse($id)

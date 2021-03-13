@@ -17,6 +17,7 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
    .sass('resources/sass/lte.scss', 'public/css')
     .copy('resources/js/slick.min.js', 'public/js')
+    .copy('resources/js/snow.js', 'public/js')
     .copy('resources/font', 'public/font')
     .copy('node_modules/@fortawesome', 'public/font')
     .options({

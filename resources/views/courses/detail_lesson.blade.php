@@ -181,14 +181,14 @@
                                             <div class="hapo-review-time">
                                                 <p class="m-0 p-0">{{ date('d-m-Y G:i', strtotime($lessonReview->created_at)) }} </p>
                                             </div>
-                                            <div class="btn-group ml-auto">
+                                            <div class="btn-group ml-auto" style="{{ $lessonReview->user_id == Auth::id() ? '' : 'display:none' }}">
                                                 <div class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 </div>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     {{-- Edit a review --}}
                                                     {{-- <form method="GET" action="{{ route('review.edit', $lessonReview->id)}}"> --}}
                                                     <form method="GET">    
-                                                        <button type="button" class="btn btn-light dropdown-item" id="{{ $lessonReview->id }}" data-toggle="modal" data-target="#editReview">
+                                                        <button type="button" class="btn btn-light dropdown-item" id="{{ $lessonReview->id }}" data-toggle="modal" data-target="#editReview-{{ $lessonReview->id }}">
                                                             Edit
                                                         </button>
                                                     </form>
@@ -213,6 +213,39 @@
                                     </div>
                                 </div>
                                 <hr>
+                                {{-- tạo form edit review --}}
+                                <div class="modal" id="editReview-{{ $lessonReview->id }}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="{{ route('review.update', $lessonReview->id) }}" method="post">
+                                                @method('PUT') 
+                                                @csrf 
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Edit Review</h4><button class="close" data-dismiss="modal" type="button">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <textarea name="content" class="form-control mb-3" cols="30" name="content" placeholder="Message" rows="3">{{ $lessonReview->content }}</textarea>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="lesson-detail-title mr-3">
+                                                            Vote:
+                                                        </div>
+                                                        <div class="rating">
+                                                            <input class="rating" id="starFive{{ $lessonReview->id }}" name="rating" type="radio" value="5"><label for="starFive{{ $lessonReview->id }}" title="Rocks!">5 stars</label> 
+                                                            <input class="rating" id="starFour{{ $lessonReview->id }}" name="rating" type="radio" value="4"><label for="starFour{{ $lessonReview->id }}" title="Pretty good">4 stars</label> 
+                                                            <input class="rating" id="starThree{{ $lessonReview->id }}" name="rating" type="radio" value="3"><label for="starThree{{ $lessonReview->id }}" title="Meh">3 stars</label> 
+                                                            <input class="rating" id="starTwo{{ $lessonReview->id }}" name="rating" type="radio" value="2"><label for="starTwo{{ $lessonReview->id }}" title="Kinda bad">2 stars</label> 
+                                                            <input class="rating" id="starOne{{ $lessonReview->id }}" name="rating" type="radio" value="1"><label for="starOne{{ $lessonReview->id }}" title="Sucks big time">1 star</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-sm btn-outline-secondary text-uppercase" data-dismiss="modal" type="button">Cancel</button> 
+                                                    <button class="btn btn-sm btn-outline-success text-uppercase" type="submit">Update</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                                 @endforeach
                             </div>
                             {{-- tạo form Create a Review --}}
@@ -251,7 +284,7 @@
                     <i class="fas fa-desktop"></i> Course: {{ $lesson->course->name }}
                 </div>
                 <div class="course-info-text">
-                    <i class="fas fa-users"></i> Learners: {{ $lesson->course->number_user }}
+                    <i class="fas fa-users"></i> Learners: {{ $lesson->number_user }}
                 </div>
                 <div class="course-info-text">
                     <i class="far fa-clock"></i> Times:  {{ $lesson->time }} minutes
@@ -287,38 +320,6 @@
         </div>
     </div>
 </div>
-{{-- tạo form edit review --}}
-<div class="modal" id="editReview">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="{{ route('review.update', $lessonReview->id) }}" method="post">
-                @method('PUT') 
-                @csrf 
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Review</h4><button class="close" data-dismiss="modal" type="button">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <textarea name="update_review" class="form-control mb-3" id="content" cols="30" name="content" placeholder="Message" rows="3">{{ $lessonReview->content }}</textarea>
-                    <div class="d-flex align-items-center">
-                        <div class="lesson-detail-title mr-3">
-                            Vote:
-                        </div>
-                        <div class="rating">
-                            <input class="rating" id="starFive" name="update_rating" type="radio" value="5"><label for="starFive" title="Rocks!">5 stars</label> 
-                            <input class="rating" id="starFour" name="update_rating" type="radio" value="4"><label for="starFour" title="Pretty good">4 stars</label> 
-                            <input class="rating" id="starThree" name="update_rating" type="radio" value="3"><label for="starThree" title="Meh">3 stars</label> 
-                            <input class="rating" id="starTwo" name="update_rating" type="radio" value="2"><label for="starTwo" title="Kinda bad">2 stars</label> 
-                            <input class="rating" id="starOne" name="update_rating" type="radio" value="1"><label for="starOne" title="Sucks big time">1 star</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-sm btn-outline-secondary text-uppercase" data-dismiss="modal" type="button">Cancel</button> 
-                    <button class="btn btn-sm btn-outline-success text-uppercase" type="submit">Update</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 
 @endsection

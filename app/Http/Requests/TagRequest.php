@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReviewRequest extends FormRequest
+class TagRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +24,14 @@ class ReviewRequest extends FormRequest
     public function rules()
     {
         return [
-            'rating' => 'required',
-            'content' => 'required|max:500'
+            'name' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'rating.required' => 'Bạn chưa để lại đánh giá',
-            'content.required' => 'Bạn chưa viết bình luận!',
-            'content.max' => 'Bạn đã viết quá độ dài cho phép'
+            'name.required' => 'Không được để trống',
         ];
     }
 }

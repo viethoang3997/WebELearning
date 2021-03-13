@@ -8,7 +8,7 @@
             Learn Anytime, Anywhere
         </div>
         <div class="banner-title">
-            at HapoLearn <img alt="#" src="{{ asset('storage/image/Group%206.png') }}"> !
+            at E-Learning <img alt="#" src="{{ asset('storage/image/Group%206.png') }}"> !
         </div>
         <div class="banner-des">
             Interactive lessons, "on-the-go"<br>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="card-text hapolearn-card-text text-center px-xl-3 py-xl-1 m-auto">
                         {{ $value->description }}
-                    </div><a class="d-flex justify-content-center text-decoration-none" href="#"><button class="btn hapolearn-courses-btn mb-3 m-md-0 pl-md-4 pr-md-4 mt-md-3 mt-xl-3 mb-xl-3">Take This Course</button></a>
+                    </div><a class="d-flex justify-content-center text-decoration-none mb-5" href="#"><button class="btn hapolearn-courses-btn mb-3 m-md-0 pl-md-4 pr-md-4 mt-md-3 mt-xl-3 mb-xl-3">Take This Course</button></a>
                 </div>
             </div>
         @endif

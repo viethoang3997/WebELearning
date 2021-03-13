@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Lesson extends Model
 {
-    public $timestamps = false;
+    public $timestamps = true;
     protected $table = 'lessons';
     protected $fillable = ['name', 'image', 'description', 'requirement', 'time', 'course_id'];
 
@@ -71,5 +71,11 @@ class Lesson extends Model
             $check = $this->user()->wherePivot("user_id", Auth::user()->id)->get();
         }
         return count($check);
+    }
+
+    public function getNumberUserAttribute()
+    {
+        $users = $this->user()->distinct()->get();
+        return count($users);
     }
 }

@@ -80,3 +80,16 @@ $("#avatar").change(function() {
   readURL(this);
   $('#avatarUpload').removeClass('d-none').addClass('d-block');
 });
+
+$('#filterBtn').click(function() {
+  $('#filterTable').toggle();
+})
+
+if($('#order').val() == 0) {
+  $('#newest').attr('checked', 'checked');
+}
+if($('#order').val() == 1) {
+  $('#oldest').attr('checked', 'checked');
+}
+var teacherId = $('#teacherId').val();
+$('#teacher option[value=' + teacherId + ']').attr('selected', true);
