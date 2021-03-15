@@ -30,7 +30,7 @@ class ProfileController extends Controller
         return redirect()->back()->with('message', __('messages.success.update'));
     }
 
-    public function uploadAvatar(ProfileRequest $request, $id)
+    public function uploadAvatar(Request $request, $id)
     {
         $user = User::find($id);
         $image = $user->avatar;

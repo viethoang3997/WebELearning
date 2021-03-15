@@ -56,10 +56,10 @@
                     <i class="fas fa-home text-info mr-2"></i>{{ $user->address }}
                 </div>
                 <div class="text-justify">
-                    Vivamus volutpat eros pulvinar velit laoreet, 
-                    sit amet egestas erat dignissim. Sed quis rutrum tellus, 
-                    sit amet viverra felis. Cras sagittis sem sit amet urna feugiat rutrum. 
-                    Nam nulla ippsumipsum, them venenatis
+                    Học viên của Hapo Learning.
+                    Luôn nhận được sự trợ giúp của đội ngũ giáo viên,
+                    được tư vấn giải đáp các tình huống khi đi làm,
+                    hướng dẫn và học thực tế, vì một tương lai phát triển
                 </div>
             </div>
             <div class="col-8">
@@ -73,8 +73,8 @@
                         </div>
                         @endforeach
                         <div class="d-flex flex-column justify-content-center mx-3">
-                            <a href="{{ route('course.index') }}" class="mx-auto"><img src="{{ asset('storage/image/Group99.png') }}"></a>
-                            {{-- <div class="text-center text-success">Add course</div> --}}
+                            <a href="{{ route('course.index') }}" class="mx-auto"><img src="{{ asset('storage/image/AddCourse.png') }}"></a>
+                            <div class="text-center text-success">Add course</div>
                         </div>
                     </div>
                 </div>

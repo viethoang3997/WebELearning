@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Models\Lesson;
+use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 
 class Course extends Model
@@ -26,6 +27,11 @@ class Course extends Model
     public function user()
     {
         return $this->belongsToMany(User::class, 'course_user');
+    }
+
+    public function review()
+    {
+        return $this->hasMany(Review::class);
     }
 
     public function userCourse()
@@ -93,15 +99,11 @@ class Course extends Model
         return count($check);
     }
 
-    // public function getCourseLearnedAttribute()
-    // {
-    //     return $this->user()->wherePivot('user_id', Auth::id())->exists();
-    // }
-
     public function scopeNameCourse($query, $name)
     {
         if ($name) {
-            $query->where('title', 'like', '%' . $name . '%');
+            $query->where('name', 'like', '%' . $name . '%')
+            ->orWhere('description', 'like', '%'  . $name. '%');
         }
         return $query;
     }
@@ -114,13 +116,13 @@ class Course extends Model
         return $query;
     }
 
-    public function scopeTeacherFind($query, $teacherId)
-    {
-        if ($teacherId) {
-            $query->where('teacher_id', $teacherId);
-        }
-        return $query;
-    }
+    // public function scopeTeacherFind($query, $teacherId)
+    // {
+    //     if ($teacherId) {
+    //         $query->where('teacher_id', $teacherId);
+    //     }
+    //     return $query;
+    // }
 
     public function scopeFindByTag($query, $tag)
     {
@@ -136,13 +138,13 @@ class Course extends Model
     public function scopeOrderByStudents($query, $students)
     {
         if ($students == Course::ORDER['most']) {
-            $query->withCount('learner')
-                ->orderBy('learner_count', 'desc');
+            $query->withCount('user')
+                ->orderBy('user_count', 'desc');
         }
 
         if ($students == Course::ORDER['least']) {
-            $query->withCount('learner')
-                ->orderBy('learner_count');
+            $query->withCount('user')
+                ->orderBy('user_count');
         }
         return $query;
     }
@@ -150,11 +152,11 @@ class Course extends Model
     public function scopeOrderByLessosn($query, $lesson)
     {
         if ($lesson == Course::ORDER['most']) {
-            $query->withCount('lessons')->orderBy('lessons_count', 'desc');
+            $query->withCount('lesson')->orderBy('lessons_count', 'desc');
         }
 
         if ($lesson == Course::ORDER['least']) {
-            $query->withCount('lessons')->orderBy('lessons_count');
+            $query->withCount('lesson')->orderBy('lessons_count');
         }
         return $query;
     }
@@ -162,11 +164,28 @@ class Course extends Model
     public function scopeOrderByReviews($query, $reviews)
     {
         if ($reviews == Course::ORDER['most']) {
-            $query->withCount('reviews')->orderBy('reviews_count', 'desc');
+            $query->withCount('review')->orderBy('review_count', 'desc');
         }
 
         if ($reviews == Course::ORDER['least']) {
-            $query->withCount('reviews')->orderBy('reviews_count');
+            $query->withCount('review')->orderBy('review_count');
+        }
+        return $query;
+    }
+
+    public function scopeOrderByTimes($query, $time)
+    {
+        if ($time == Course::ORDER['most']) {
+            $query->addSelect(['time' => Lesson::selectRaw('sum(time) as total')
+                    ->whereColumn('course_id', 'courses.id')
+                    ->groupBy('course_id')
+                ])->orderByDesc('time');
+        }
+        if ($time == Course::ORDER['least']) {
+            $query->addSelect(['time' => Lesson::selectRaw('sum(time) as total')
+                    ->whereColumn('course_id', 'courses.id')
+                    ->groupBy('course_id')
+                ])->orderBy('time');
         }
         return $query;
     }

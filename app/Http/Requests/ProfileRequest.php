@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileRequest extends FormRequest
 {
@@ -25,11 +26,12 @@ class ProfileRequest extends FormRequest
     {
         return [
             'name' => 'required|min: 5|max: 50',
-            'email' => 'required|email|unique:users,email, '. auth()->user()->id . ',id',
+            // kiem tra id cua nguoi dung xac thuc
+            // 'email' => 'required|email|unique:users,email,'. Auth::user()->id . ',id',
             'birth_day' => 'date',
-            'phone' => 'required|numeric|max:15',
+            'phone' => 'required|numeric',
             'address' => 'required',
-            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif'
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif'
         ];
     }
 }

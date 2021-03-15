@@ -27,39 +27,37 @@ class CourseController extends Controller
         return view('courses.detail_course', compact(['courses', 'lessons', 'otherCourses']));
     }
 
+    // public function getSearch(Request $request)
+    // {
+    //     $search = $request->get('search');
+    //     $courses = Course::where('name', 'like', '%' . $search . '%')
+    //                             ->orWhere('description', 'like', '%'  . $search. '%')
+    //                             ->paginate(2);
+    //     return view('courses.all_course', compact('courses', 'search'));
+    // }
+
     public function getSearch(Request $request)
     {
-        $search = $request->get('search');
-        $courses = Course::where('name', 'like', '%' . $search . '%')
-                                ->orWhere('description', 'like', '%'  . $search. '%')
-                                ->paginate(2);
-        return view('courses.all_course', compact('courses', 'search'));
+        $tags = Tag::all();
+        $courses = Course::query()
+            ->OrderByTimes($request->times)
+            ->NameCourse($request->name_course)
+            ->OrderByStudents($request->students)
+            ->OrderByLessosn($request->lessons)
+            ->OrderByReviews($request->reviews)
+            ->OrderCourse($request->order_by_time)
+            ->FindByTag($request->tags)
+            ->paginate(8);
+        return view('courses.all_course', compact('tags', 'courses'));
     }
 
-    // public function getSearch(Request $request)
+    // public function searchByTag($id)
     // {
     //     $teachers = User::where('role_id', '2')->get();
     //     $tags = Tag::all();
-    //     $courses = Course::query()
-    //         ->OrderByTimes($request->time)
-    //         ->NameCourse($request->name)
-    //         ->OrderByStudents($request->student)
-    //         ->OrderByLessosn($request->lesson)
-    //         ->OrderByReviews($request->review)
-    //         ->OrderCourse($request->order_by_time)
-    //         ->TeacherFind($request->teacher)
-    //         ->FindByTag($request->tag)
-    //         ->paginate(2);
-    //     return view('courses.all_courses', compact('courses', 'teachers', 'tags'));
+    //     $courses = Course::query()->FindByTag($id)->paginate(config('variable.paginate'));
+    //     return view('courses.all_course', compact('courses', 'teachers', 'tags'));
     // }
-
-    public function searchByTag($id)
-    {
-        $teachers = User::where('role_id', '2')->get();
-        $tags = Tag::all();
-        $courses = Course::query()->FindByTag($id)->paginate(config('variable.paginate'));
-        return view('courses.all_courses', compact('courses', 'teachers', 'tags'));
-    }
 
     public function joinCourse($id)
     {

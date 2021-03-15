@@ -91,5 +91,4 @@ if($('#order').val() == 0) {
 if($('#order').val() == 1) {
   $('#oldest').attr('checked', 'checked');
 }
-var teacherId = $('#teacherId').val();
-$('#teacher option[value=' + teacherId + ']').attr('selected', true);
+

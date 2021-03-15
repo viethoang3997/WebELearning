@@ -7,7 +7,7 @@
             <div class="d-flex align-items-center mt-3">
                 <button class="btn filter-btn mr-2 py-2" id="filterBtn"><i class="fas fa-sliders-h mr-1"></i>Filter</button>
                 <form action="{{ route('course.search') }}" method="GET">
-                    <input type="text" placeholder="Search..." class="find-input p-2" name="search" value="{{ request('search') }}">
+                    <input type="text" placeholder="Search..." class="find-input p-2" name="name_course" value="{{ request('name_course') }}">
                     <i class="fas fa-search search-icon"></i>
                     <input type="submit" class="btn-search" value="Tìm kiếm">
                 </form>
@@ -27,20 +27,11 @@
                     </div>
                     <input type="text" value="{{ request('order_by_time') }}" hidden id="order">
                     <div class="filter-select">
-                        <select name="teacher" class="custom-select">
-                            <option selected value="0">Teacher</option>
-                            {{-- @foreach ($teachers as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                            @endforeach --}}
-                        </select>
-                        <input type="text" id="teacherId" value="{{ request('teacher') }}" hidden>
-                    </div>
-                    <div class="filter-select">
                         <select name="tags" class="custom-select">
                             <option value="0">Tag</option>
-                            {{-- @foreach ($tags as $tag)
+                            @foreach ($tags as $tag)
                                 <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                            @endforeach --}}
+                            @endforeach
                         </select>
                     </div>
                     <div class="filter-select">
