@@ -23,7 +23,7 @@
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            @if(Auth::user()->role_id === App\User::ROLE_TEACHER)
+                            @if(Auth::user()->role_id != App\User::ROLE_USER)
                             <li>
                                 <a href="{{ route('admin.index') }}" class="text-decoration-none">
                                     <span><i class="fa fa-tasks" aria-hidden="true"></i> Manage</span>

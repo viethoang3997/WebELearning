@@ -17,11 +17,11 @@
                         <div class="col-1 filter-title p-3">Filter</div>
                         <div class="col-10 d-flex flex-wrap">
                             <div class="order-by-time">
-                                <input type="radio" name="order_by_newest" id="newest" hidden value="1">
+                                <input type="radio" name="order_by_time" id="newest" hidden value="1">
                                 <label for="newest" class="px-4 py-2">Newest</label>
                             </div>
                             <div class="order-by-time">
-                                <input type="radio" name="order_by_oldest" id="oldest" hidden value="2">
+                                <input type="radio" name="order_by_time" id="oldest" hidden value="2">
                                 <label for="oldest" class="px-4 py-2">Oldest</label>
                             </div>
                             {{-- <input type="text" value="{{ request('order_by_time') }}" hidden id="order"> --}}

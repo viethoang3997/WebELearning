@@ -63,6 +63,7 @@ class UserAdminController extends Controller
             $data['avatar'] = $avatar;
         }
         $data['password'] = isset($data['password']) ? Hash::make($data['password']) : $user['password'];
+        $data['role_id'] = $data['role'];
         $user->update($data);
         return redirect('admin/users')->with('message', __('messages.success.edit'));
     }

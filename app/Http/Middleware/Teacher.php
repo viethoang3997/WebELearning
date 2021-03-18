@@ -18,7 +18,7 @@ class Teacher
     public function handle($request, Closure $next)
     {
         $user = Auth::user();
-        if (isset($user) && $user->role_id === User::ROLE_TEACHER) {
+        if (isset($user) && $user->role_id != User::ROLE_USER) {
             return $next($request);
         }
         return redirect('/index');

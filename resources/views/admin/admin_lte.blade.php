@@ -101,6 +101,7 @@
                             </li>
                         </ul>
                     </li>
+                    @if(Auth::user()->role_id === App\User::ROLE_ADMIN)
                     <li class="nav-item has-treeview menu-open">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fa fa-tachometer-alt"></i>
@@ -124,6 +125,7 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
                     <li class="nav-item has-treeview menu-open">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fa fa-tachometer-alt"></i>

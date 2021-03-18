@@ -12,7 +12,8 @@ class User extends Authenticatable
     use Notifiable;
 
     const ROLE_USER = 1;
-    const ROLE_TEACHER = 2;
+    const ROLE_TEACHER = 3;
+    const ROLE_ADMIN = 2;
 
     /**
      * The attributes that are mass assignable.
