@@ -27,27 +27,10 @@ class CourseController extends Controller
         return view('courses.detail_course', compact(['courses', 'lessons', 'otherCourses']));
     }
 
-    // public function getSearch(Request $request)
-    // {
-    //     $search = $request->get('search');
-    //     $courses = Course::where('name', 'like', '%' . $search . '%')
-    //                             ->orWhere('description', 'like', '%'  . $search. '%')
-    //                             ->paginate(2);
-    //     return view('courses.all_course', compact('courses', 'search'));
-    // }
-
     public function getSearch(Request $request)
     {
         $tags = Tag::all();
-        $courses = Course::query()
-            ->OrderByTimes($request->times)
-            ->NameCourse($request->name_course)
-            ->OrderByStudents($request->students)
-            ->OrderByLessosn($request->lessons)
-            ->OrderByReviews($request->reviews)
-            ->OrderCourse($request->order_by_time)
-            ->FindByTag($request->tags)
-            ->paginate(8);
+        $courses = Course::query()->SearchFilter($request)->paginate(8);
         return view('courses.all_course', compact('tags', 'courses'));
     }
 

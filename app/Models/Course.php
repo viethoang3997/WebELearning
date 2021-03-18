@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Models\Lesson;
 use App\Models\Review;
+use App\Models\CourseTag;
 use Illuminate\Support\Facades\Auth;
 
 class Course extends Model
@@ -15,8 +16,8 @@ class Course extends Model
     protected $fillable = ['name', 'image', 'description', 'price', 'time'];
 
     const ORDER = [
-        'most' => 'most',
-        'least' => 'least'
+        'most' => 1,
+        'least' => 2,
     ];
 
     public function lesson()
@@ -27,6 +28,11 @@ class Course extends Model
     public function user()
     {
         return $this->belongsToMany(User::class, 'course_user');
+    }
+
+    public function getCountUserAttribute()
+    {
+        return $this->user()->count();
     }
 
     public function review()
@@ -42,6 +48,11 @@ class Course extends Model
     public function tag()
     {
         return $this->belongsToMany(Tag::class, 'course_tag');
+    }
+
+    public function courseTag()
+    {
+        return $this->hasMany(CourseTag::class);
     }
 
     public function getNumberUserAttribute()
@@ -99,94 +110,78 @@ class Course extends Model
         return count($check);
     }
 
-    public function scopeNameCourse($query, $name)
+    public function scopeSearchFilter($query, $request)
     {
-        if ($name) {
-            $query->where('name', 'like', '%' . $name . '%')
-            ->orWhere('description', 'like', '%'  . $name. '%');
-        }
-        return $query;
-    }
+        $querry = null;
 
-    public function scopeOrderCourse($query, $order)
-    {
-        if ($order == 0) {
-            $query->orderBy('id', 'desc');
-        }
-        return $query;
-    }
-
-    // public function scopeTeacherFind($query, $teacherId)
-    // {
-    //     if ($teacherId) {
-    //         $query->where('teacher_id', $teacherId);
-    //     }
-    //     return $query;
-    // }
-
-    public function scopeFindByTag($query, $tag)
-    {
-        if ($tag) {
-            $query->join('course_tag', 'courses.id', '=', 'course_id')
-            ->join('tags', 'tags.id', '=', 'course_tag.tag_id')
-            ->where('tags.id', $tag)
-            ->get(['courses.*']);
-        }
-        return $query;
-    }
-
-    public function scopeOrderByStudents($query, $students)
-    {
-        if ($students == Course::ORDER['most']) {
-            $query->withCount('user')
-                ->orderBy('user_count', 'desc');
+        if ($request->has('name_course')) {
+            $querry = $query->where('name', 'like', '%' . $request->name_course . '%')
+            ->orWhere('description', 'like', '%'  . $request->name_course . '%');
         }
 
-        if ($students == Course::ORDER['least']) {
-            $query->withCount('user')
-                ->orderBy('user_count');
-        }
-        return $query;
-    }
-
-    public function scopeOrderByLessosn($query, $lesson)
-    {
-        if ($lesson == Course::ORDER['most']) {
-            $query->withCount('lesson')->orderBy('lessons_count', 'desc');
+        if ($request->has('order_by_newest') == 0) {
+            $querry = $query->orderByDesc('id');
         }
 
-        if ($lesson == Course::ORDER['least']) {
-            $query->withCount('lesson')->orderBy('lessons_count');
-        }
-        return $query;
-    }
-
-    public function scopeOrderByReviews($query, $reviews)
-    {
-        if ($reviews == Course::ORDER['most']) {
-            $query->withCount('review')->orderBy('review_count', 'desc');
+        if ($request->has('order_by_oldest') == 0) {
+            $querry = $query->orderBy('id');
         }
 
-        if ($reviews == Course::ORDER['least']) {
-            $query->withCount('review')->orderBy('review_count');
+        if ($request->has('tags') != 0) {
+            $querry = $query->with('courseTag')->whereHas('courseTag', function ($q) use ($request) {
+                $q->join('tags', 'tags.id', '=', 'course_tag.tag_id')
+                ->where('tags.id', $request->tags);
+            })
+            ->get();
         }
-        return $query;
-    }
 
-    public function scopeOrderByTimes($query, $time)
-    {
-        if ($time == Course::ORDER['most']) {
-            $query->addSelect(['time' => Lesson::selectRaw('sum(time) as total')
+        if ($request->has('students')) {
+            if ($request->students == Course::ORDER['most']) {
+                $querry = $query->withCount('user')->orderByDesc('user_count');
+            }
+
+            if ($request->students == Course::ORDER['least']) {
+                $querry = $query->withCount('user')->orderBy('user_count');
+            }
+        }
+
+        if ($request->has('lessons')) {
+            if ($request->lessons == Course::ORDER['most']) {
+                $querry = $query->withCount('lesson')->orderByDesc('lesson_count');
+            }
+
+            if ($request->lessons == Course::ORDER['least']) {
+                $querry = $query->withCount('lesson')->orderBy('lesson_count');
+            }
+        }
+
+        if ($request->has('reviews')) {
+            if ($request->reviews == Course::ORDER['most']) {
+                $querry = $query->withCount('review')->orderByDesc('review_count');
+            }
+
+            if ($request->reviews == Course::ORDER['least']) {
+                $querry = $query->withCount('review')->orderBy('review_count');
+            }
+        }
+
+        if ($request->has('times')) {
+            if ($request->times == Course::ORDER['most']) {
+                $querry = $query->addSelect(['time' => Lesson::selectRaw('sum(time) as total')
                     ->whereColumn('course_id', 'courses.id')
                     ->groupBy('course_id')
                 ])->orderByDesc('time');
-        }
-        if ($time == Course::ORDER['least']) {
-            $query->addSelect(['time' => Lesson::selectRaw('sum(time) as total')
+            }
+
+            if ($request->times == Course::ORDER['least']) {
+                $querry = $query->addSelect(['time' => Lesson::selectRaw('sum(time) as total')
                     ->whereColumn('course_id', 'courses.id')
                     ->groupBy('course_id')
                 ])->orderBy('time');
+            }
         }
-        return $query;
+
+        return $querry;
     }
+
 }

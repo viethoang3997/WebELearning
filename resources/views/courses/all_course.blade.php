@@ -10,61 +10,63 @@
                     <input type="text" placeholder="Search..." class="find-input p-2" name="name_course" value="{{ request('name_course') }}">
                     <i class="fas fa-search search-icon"></i>
                     <input type="submit" class="btn-search" value="Tìm kiếm">
-                </form>
             </div>
-        </div>
-        <div class="course-filter row mt-3 mb-3" id="filterTable">
-            <div class="d-flex">
-                <div class="col-1 filter-title p-3">Filter</div>
-                <div class="col-10 d-flex flex-wrap">
-                    <div class="order-by-time">
-                        <input type="radio" name="order_by_time" id="newest" hidden value="0">
-                        <label for="newest" class="px-4 py-2">Newest</label>
-                    </div>
-                    <div class="order-by-time">
-                        <input type="radio" name="order_by_time" id="oldest" hidden value="1">
-                        <label for="oldest" class="px-4 py-2">Oldest</label>
-                    </div>
-                    <input type="text" value="{{ request('order_by_time') }}" hidden id="order">
-                    <div class="filter-select">
-                        <select name="tags" class="custom-select">
-                            <option value="0">Tag</option>
-                            @foreach ($tags as $tag)
-                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="filter-select">
-                        <select name="students" class="custom-select">
-                            <option value="0">Number Students</option>
-                            <option value="most">Most Students</option>
-                            <option value="least">Least Students</option>
-                        </select>
-                    </div>
-                    <div class="filter-select">
-                        <select name="lessons" class="custom-select">
-                            <option value="0">Number Lessons</option>
-                            <option value="most">Most Lessons</option>
-                            <option value="least">Least Lessons</option>
-                        </select>
-                    </div>
-                    <div class="filter-select">
-                        <select name="reviews" class="custom-select">
-                            <option value="0">Reviews</option>
-                            <option value="most">Most Reviews</option>
-                            <option value="least">Least Reviews</option>
-                        </select>
-                    </div>
-                    <div class="filter-select">
-                        <select name="times" class="custom-select">
-                            <option value="0">Times</option>
-                            <option value="most">Longest Time</option>
-                            <option value="least">Shortest Time</option>
-                        </select>
+        </div>            
+                <div class="course-filter row mt-3 mb-3" id="filterTable">
+                    <div class="d-flex">
+                        <div class="col-1 filter-title p-3">Filter</div>
+                        <div class="col-10 d-flex flex-wrap">
+                            <div class="order-by-time">
+                                <input type="radio" name="order_by_newest" id="newest" hidden value="1">
+                                <label for="newest" class="px-4 py-2">Newest</label>
+                            </div>
+                            <div class="order-by-time">
+                                <input type="radio" name="order_by_oldest" id="oldest" hidden value="2">
+                                <label for="oldest" class="px-4 py-2">Oldest</label>
+                            </div>
+                            {{-- <input type="text" value="{{ request('order_by_time') }}" hidden id="order"> --}}
+                            <div class="filter-select">
+                                <select name="tags" class="custom-select">
+                                    <option value="0">Tag</option>
+                                    @foreach ($tags as $tag)
+                                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="filter-select">
+                                <select name="students" class="custom-select">
+                                    <option value="">Number Students</option>
+                                    <option value="1">Most Students</option>
+                                    <option value="2">Least Students</option>
+                                </select>
+                            </div>
+                            <div class="filter-select">
+                                <select name="lessons" class="custom-select">
+                                    <option value="">Number Lessons</option>
+                                    <option value="1">Most Lessons</option>
+                                    <option value="2">Least Lessons</option>
+                                </select>
+                            </div>
+                            <div class="filter-select">
+                                <select name="reviews" class="custom-select">
+                                    <option value="">Reviews</option>
+                                    <option value="1">Most Reviews</option>
+                                    <option value="2">Least Reviews</option>
+                                </select>
+                            </div>
+                            <div class="filter-select">
+                                <select name="times" class="custom-select">
+                                    <option value="">Times</option>
+                                    <option value="1">Longest Time</option>
+                                    <option value="2">Shortest Time</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </form>
+        
+    
         <div class="all-course row">
             @if (count($courses) > 0)
                 @foreach ($courses as $course)
